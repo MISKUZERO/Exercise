@@ -18,8 +18,8 @@ public interface Graph<V, E> {
 
     List<E> getEdges(V v);
 
-    void bfs(V root, BiConsumer<V, Integer> consumer);
+    void breadthFirstSearch(V root, BiConsumer<V, Integer> consumer);
 
-    void dfs(V root, Consumer<V> consumer);
+    void depthFirstSearch(V root, Consumer<V> consumer);
 
 }
