@@ -1,6 +1,7 @@
 package struct;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public interface Graph<V, E> {
@@ -17,7 +18,7 @@ public interface Graph<V, E> {
 
     List<E> getEdges(V v);
 
-    void bfs(V root, Consumer<V> consumer);
+    void bfs(V root, BiConsumer<V, Integer> consumer);
 
     void dfs(V root, Consumer<V> consumer);
 

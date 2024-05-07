@@ -1,6 +1,7 @@
 package struct;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class StaticLinkedGraphAdapter implements Graph<StaticLinkedGraph.Node, StaticLinkedGraph.Node> {
@@ -27,7 +28,7 @@ public class StaticLinkedGraphAdapter implements Graph<StaticLinkedGraph.Node, S
 
     @Override
     public StaticLinkedGraph.Node firstVertex(StaticLinkedGraph.Node v) {
-        return graph.vNodes.get(v.id);
+        return graph.vNodes.get(v.id).next;
     }
 
     @Override
@@ -45,27 +46,41 @@ public class StaticLinkedGraphAdapter implements Graph<StaticLinkedGraph.Node, S
         throw new UnsupportedOperationException();
     }
 
-    public void bfs(int vid, Consumer<StaticLinkedGraph.Node> consumer) {
-        bfs(graph.vNodes.get(vid), consumer);
+    public void bfs(int vid, BiConsumer<StaticLinkedGraph.Node, Integer> biConsumer) {
+        bfs(graph.vNodes.get(vid), biConsumer);
     }
 
     @Override
-    public void bfs(StaticLinkedGraph.Node root, Consumer<StaticLinkedGraph.Node> consumer) {
+    public void bfs(StaticLinkedGraph.Node root, BiConsumer<StaticLinkedGraph.Node, Integer> biConsumer) {
+        final StaticLinkedGraph.Node LAYER_FLAG = new StaticLinkedGraph.Node(0);
         LinkedList<StaticLinkedGraph.Node> queue = new LinkedList<>();
         ArrayList<StaticLinkedGraph.Node> vNodes = graph.vNodes;
         boolean[] visits = new boolean[vNodes.size()];
         int idx = root.id, length = visits.length;
         boolean notFull = true;
         while (notFull) {
-            queue.add(vNodes.get(idx));
+            int layer = 0;
+            StaticLinkedGraph.Node r = vNodes.get(idx);
+            visits[r.id] = true;
+            biConsumer.accept(r, layer++);
+            queue.addLast(vNodes.get(idx));
+            queue.addLast(LAYER_FLAG);
             while (!queue.isEmpty()) {
-                for (StaticLinkedGraph.Node cur = firstVertex(queue.pollFirst());
+                StaticLinkedGraph.Node poll = queue.pollFirst();
+                if (poll == LAYER_FLAG) {
+                    layer++;
+                    poll = queue.pollFirst();
+                    if (poll == null)
+                        break;
+                    queue.addLast(LAYER_FLAG);
+                }
+                for (StaticLinkedGraph.Node cur = firstVertex(poll);
                      cur != null;
                      cur = nextVertex(null, cur)) {
                     int id = cur.id;
                     if (!visits[id]) {
-                        consumer.accept(cur);
                         visits[id] = true;
+                        biConsumer.accept(cur, layer);
                         queue.addLast(cur);
                     }
                 }
