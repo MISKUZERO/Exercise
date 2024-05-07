@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Test4 {
 
-    static int v = 30, e = 90;
+    static int v = 25, e = 75;
     static ArrayList<int[]> edges = getEdges(v, e);
 
     public static ArrayList<int[]> getEdges(int V, int E) {

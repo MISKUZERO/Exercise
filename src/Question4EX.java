@@ -1,4 +1,4 @@
-import struct.Graph;
+import struct.LinkedGraph;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ public class Question4EX {
 //        String[] s = fLine.split(" ");
 //        final int V = Integer.parseInt(s[0]);
 //        final int E = Integer.parseInt(s[1]);
-//        Graph graph = new Graph(V);
+//        LinkedGraph graph = new LinkedGraph(V);
 //        for (int i = 0; i < E; i++) {
 //            String line = scanner.nextLine();
 //            String[] ss = line.split(" ");
@@ -20,7 +20,7 @@ public class Question4EX {
         int V = Test4.v;
         ArrayList<int[]> edges = Test4.edges;
 
-        Graph graph = new Graph(V);
+        LinkedGraph graph = new LinkedGraph(V);
         for (int[] edge : edges)
             graph.addEdge(edge[0], edge[1]);
 
