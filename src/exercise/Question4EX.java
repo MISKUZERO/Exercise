@@ -1,4 +1,6 @@
-import struct.LinkedGraph;
+package exercise;
+
+import struct.StaticLinkedGraph;
 
 import java.util.*;
 
@@ -11,16 +13,16 @@ public class Question4EX {
 //        String[] s = fLine.split(" ");
 //        final int V = Integer.parseInt(s[0]);
 //        final int E = Integer.parseInt(s[1]);
-//        LinkedGraph graph = new LinkedGraph(V);
+//        StaticLinkedGraph graph = new StaticLinkedGraph(V);
 //        for (int i = 0; i < E; i++) {
 //            String line = scanner.nextLine();
 //            String[] ss = line.split(" ");
 //            graph.addEdge(Integer.parseInt(ss[0]), Integer.parseInt(ss[1]));
 //        }
-        int V = Test4.v;
-        ArrayList<int[]> edges = Test4.edges;
+        int V = GraphUtil.v;
+        ArrayList<int[]> edges = GraphUtil.edges;
 
-        LinkedGraph graph = new LinkedGraph(V);
+        StaticLinkedGraph graph = new StaticLinkedGraph(V);
         for (int[] edge : edges)
             graph.addEdge(edge[0], edge[1]);
 

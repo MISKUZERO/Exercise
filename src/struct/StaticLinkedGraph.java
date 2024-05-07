@@ -2,10 +2,8 @@ package struct;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.function.Consumer;
 
-public class LinkedGraph implements Graph<Integer> {
+public class StaticLinkedGraph {
 
     static class Node {
         Node next;
@@ -17,10 +15,10 @@ public class LinkedGraph implements Graph<Integer> {
         }
     }
 
-    ArrayList<Node> vNodes;
-    HashMap<Integer, ArrayList<Node>> caches;
+    final ArrayList<Node> vNodes;
+    final HashMap<Integer, ArrayList<Node>> caches;
 
-    public LinkedGraph(int vertexCount) {
+    public StaticLinkedGraph(int vertexCount) {
         ArrayList<Node> vNodes = new ArrayList<>();
         for (int i = 0; i <= vertexCount; i++)
             vNodes.add(new Node(i));
@@ -28,13 +26,10 @@ public class LinkedGraph implements Graph<Integer> {
         this.caches = new HashMap<>();
     }
 
-    @Override
-    public boolean addNode(Integer node) {
-        return false;
-    }
 
-    @Override
     public boolean addEdge(Integer node1, Integer node2) {
+        int size = vNodes.size();
+        if (node1 > size || node2 > size) return false;
         //不检查重复添加边，头插法
         HashMap<Integer, ArrayList<Node>> caches = this.caches;
         Node n1 = new Node(node1);
@@ -49,30 +44,6 @@ public class LinkedGraph implements Graph<Integer> {
         return true;
     }
 
-    @Override
-    public Integer firstNode() {
-        return null;
-    }
-
-    @Override
-    public Integer nextNode(Integer cur) {
-        return null;
-    }
-
-    @Override
-    public List<Integer> getAll() {
-        return null;
-    }
-
-    @Override
-    public void bfs(Consumer<Integer> consumer) {
-
-    }
-
-    @Override
-    public void dfs(Consumer<Integer> consumer) {
-
-    }
 
     public void paint(int[] vIds, int size, Boolean red) {
         HashMap<Integer, ArrayList<Node>> caches = this.caches;
@@ -111,15 +82,19 @@ public class LinkedGraph implements Graph<Integer> {
         int size = vNodes.size();
         for (int i = 1; i < size; i++) {
             Node cur = vNodes.get(i);
-            while (cur != null) {
-                if (cur.red)
-                    ret.append("(").append(cur.id).append(")").append("->");
-                else
-                    ret.append(" ").append(cur.id).append(" ").append("->");
-                cur = cur.next;
-            }
-            ret.append("\b\b\n");
+            loadStringBuilder(ret, cur);
         }
         return ret.toString();
+    }
+
+    public static void loadStringBuilder(StringBuilder ret, StaticLinkedGraph.Node cur) {
+        while (cur != null) {
+            if (cur.red)
+                ret.append("(").append(cur.id).append(")").append("->");
+            else
+                ret.append(" ").append(cur.id).append(" ").append("->");
+            cur = cur.next;
+        }
+        ret.append("\b\b\n");
     }
 }

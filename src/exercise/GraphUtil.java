@@ -1,11 +1,14 @@
+package exercise;
+
 import java.util.ArrayList;
 
-public class Test4 {
+public class GraphUtil {
 
     static int v = 25, e = 75;
-    static ArrayList<int[]> edges = getEdges(v, e);
+    public static ArrayList<int[]> edges = getEdges(v, e);
 
     public static ArrayList<int[]> getEdges(int V, int E) {
+        if (E > (V * (V - 1) >> 1)) throw new IllegalArgumentException("超过最大边数！");
         ArrayList<int[]> ret = new ArrayList<>();
         for (int i = 0; i < E; ) {
             int v1 = (int) (Math.random() * V) + 1;
@@ -29,7 +32,7 @@ public class Test4 {
     }
 
     public static void main(String[] args) {
-//        Question4.main(null);
+        Question4.main(null);
         Question4E.main(null);
         Question4EX.main(null);
     }

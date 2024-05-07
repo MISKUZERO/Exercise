@@ -1,6 +1,8 @@
+package exercise;
+
 import java.util.*;
 
-public class Question4 {
+public class Question4E {
 
     public static void main(String[] args) {
 //        Scanner scanner = new Scanner(System.in);
@@ -15,22 +17,17 @@ public class Question4 {
 //            edges[i] = new int[]{Integer.parseInt(ss[0]), Integer.parseInt(ss[1])};
 //        }
 
-        int V = Test4.v;
-        ArrayList<int[]> edges = Test4.edges;
+        int V = GraphUtil.v;
+        ArrayList<int[]> edges = GraphUtil.edges;
 
         long t = System.currentTimeMillis();
         int count = 0;
         final int MAX = 1 << V;
         for (int i = 0; i < MAX; i++) {
             boolean test = true;
-            HashSet<Integer> reds = new HashSet<>();
-            for (int j = 1, mask = 1; j <= V; mask <<= 1) {
-                if ((i & mask) != 0)
-                    reds.add(j);
-                j++;
-            }
             for (int[] edge : edges) {
-                if (reds.contains(edge[0]) && reds.contains(edge[1])) {
+                if (((i >> edge[0] - 1) & 1) == 1 &&
+                        ((i >> edge[1] - 1) & 1) == 1) {
                     test = false;
                     break;
                 }
@@ -38,7 +35,7 @@ public class Question4 {
             if (test)
                 count++;
         }
-        System.out.println("红色节点不相邻的情况总数：" + count);
-        System.out.println("用时：" + (System.currentTimeMillis() - t) + "ms");
+        System.out.println("（E）红色节点不相邻的情况总数：" + count);
+        System.out.println("（E）用时：" + (System.currentTimeMillis() - t) + "ms");
     }
 }

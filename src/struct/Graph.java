@@ -3,20 +3,22 @@ package struct;
 import java.util.List;
 import java.util.function.Consumer;
 
-public interface Graph<E> {
+public interface Graph<V, E> {
 
-    boolean addNode(E node);
+    boolean addNode(V v);
 
-    boolean addEdge(E node1, E node2);
+    boolean addEdge(V v1, V v2);
 
-    E firstNode();
+    V firstVertex(V root);
 
-    E nextNode(E cur);
+    V nextVertex(V root, V cur);
 
-    List<E> getAll();
+    List<V> getVertexes();
 
-    void bfs(Consumer<E> consumer);
+    List<E> getEdges(V v);
 
-    void dfs(Consumer<E> consumer);
+    void bfs(V root, Consumer<V> consumer);
+
+    void dfs(V root, Consumer<V> consumer);
 
 }
