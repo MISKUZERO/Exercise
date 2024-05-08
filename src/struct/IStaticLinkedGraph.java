@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class IStaticLinkedGraph implements Graph<StaticLinkedGraph.Node, StaticLinkedGraph.Node> {
+public class IStaticLinkedGraph implements Graph<StaticLinkedGraph.Node, int[]> {
 
     private final StaticLinkedGraph graph;
 
@@ -23,7 +23,7 @@ public class IStaticLinkedGraph implements Graph<StaticLinkedGraph.Node, StaticL
 
     @Override
     public boolean addEdge(StaticLinkedGraph.Node v1, StaticLinkedGraph.Node v2) {
-        return graph.addEdge(v1.id, v2.id);
+        return graph.addEdge(v1.id, v2.id, 1, false);
     }
 
     @Override
@@ -36,14 +36,19 @@ public class IStaticLinkedGraph implements Graph<StaticLinkedGraph.Node, StaticL
         return cur.next;
     }
 
-    @Override
-    public List<StaticLinkedGraph.Node> getVertexes() {
-        return new ArrayList<>(graph.vertexes);
+    public List<int[]> getEdges(int vid) {
+        return getEdges(graph.vertexes.get(vid));
     }
 
     @Override
-    public List<StaticLinkedGraph.Node> getEdges(StaticLinkedGraph.Node v) {
-        throw new UnsupportedOperationException();
+    public List<int[]> getEdges(StaticLinkedGraph.Node v) {
+        ArrayList<int[]> list = new ArrayList<>();
+        ArrayList<int[]> edges = graph.edges;
+        int vId = v.id;
+        for (int[] edge : edges)
+            if (edge[0] == vId || edge[1] == vId)
+                list.add(edge);
+        return list;
     }
 
     public void breadthFirstSearch(int vid, BiConsumer<StaticLinkedGraph.Node, Integer> biConsumer) {

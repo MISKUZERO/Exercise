@@ -14,8 +14,6 @@ public interface Graph<V, E> {
 
     V nextVertex(V root, V cur);
 
-    List<V> getVertexes();
-
     List<E> getEdges(V v);
 
     void breadthFirstSearch(V root, BiConsumer<V, Integer> consumer);

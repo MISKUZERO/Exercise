@@ -11,24 +11,24 @@ public class Question4EX {
 //        Scanner scanner = new Scanner(System.in);
 //        String fLine = scanner.nextLine();
 //        String[] s = fLine.split(" ");
-//        final int V = Integer.parseInt(s[0]);
-//        final int E = Integer.parseInt(s[1]);
-//        StaticLinkedGraph graph = new StaticLinkedGraph(V);
-//        for (int i = 0; i < E; i++) {
+//        final int v = Integer.parseInt(s[0]);
+//        final int e = Integer.parseInt(s[1]);
+//        StaticLinkedGraph graph = new StaticLinkedGraph(v);
+//        for (int i = 0; i < e; i++) {
 //            String line = scanner.nextLine();
 //            String[] ss = line.split(" ");
 //            graph.addEdge(Integer.parseInt(ss[0]), Integer.parseInt(ss[1]));
 //        }
-        int V = GraphUtil.v;
+        int v = GraphUtil.v;
         ArrayList<int[]> edges = GraphUtil.edges;
 
-        StaticLinkedGraph graph = new StaticLinkedGraph(V);
+        StaticLinkedGraph graph = new StaticLinkedGraph(v);
         for (int[] edge : edges)
-            graph.addEdge(edge[0], edge[1]);
+            graph.addEdge(edge[0], edge[1], 1, false);
 
         long t = System.currentTimeMillis();
         int count = 0;
-        final int MAX_COUNT = 1 << V;
+        final int MAX_COUNT = 1 << v;
         ArrayList<Integer> masks = new ArrayList<>();
         for (int i = 0; i < MAX_COUNT; i++) {
             boolean ex = true;
@@ -38,9 +38,9 @@ public class Question4EX {
                     break;
                 }
             if (ex) {
-                int[] paints = new int[V];
+                int[] paints = new int[v];
                 int pSize = 0;
-                for (int j = 0; j < V; j++)
+                for (int j = 0; j < v; j++)
                     if ((i & (1 << j)) != 0)
                         paints[pSize++] = j + 1;
                 graph.paint(paints, pSize, true);

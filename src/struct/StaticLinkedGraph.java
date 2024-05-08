@@ -16,6 +16,7 @@ public class StaticLinkedGraph {
     }
 
     final ArrayList<Node> vertexes;
+    final ArrayList<int[]> edges;
     final HashMap<Integer, ArrayList<Node>> caches;
 
     public StaticLinkedGraph(int vertexCount) {
@@ -23,24 +24,28 @@ public class StaticLinkedGraph {
         for (int i = 0; i <= vertexCount; i++)
             vertexes.add(new Node(i));
         this.vertexes = vertexes;
-        this.caches = new HashMap<>();
+        edges = new ArrayList<>();
+        caches = new HashMap<>();
     }
 
 
-    public boolean addEdge(Integer node1, Integer node2) {
+    public boolean addEdge(Integer node1, Integer node2, int cost, boolean directed) {
         int size = vertexes.size();
-        if (node1 > size || node2 > size) return false;
-        //不检查重复添加边，头插法
+        if (node1 >= size || node2 >= size) return false;
         HashMap<Integer, ArrayList<Node>> caches = this.caches;
-        Node n1 = new Node(node1);
-        n1.next = vertexes.get(node2).next;
-        vertexes.get(node2).next = n1;
-        caches.computeIfAbsent(node1, k -> new ArrayList<>()).add(n1);
-        //对应边添加
+        //不检查重复添加边，头插法
         Node n2 = new Node(node2);
         n2.next = vertexes.get(node1).next;
         vertexes.get(node1).next = n2;
         caches.computeIfAbsent(node2, k -> new ArrayList<>()).add(n2);
+        if (!directed) {
+            //对应边添加
+            Node n1 = new Node(node1);
+            n1.next = vertexes.get(node2).next;
+            vertexes.get(node2).next = n1;
+            caches.computeIfAbsent(node1, k -> new ArrayList<>()).add(n1);
+        }
+        edges.add(new int[]{node1, node2, cost});
         return true;
     }
 
