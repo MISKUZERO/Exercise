@@ -20,4 +20,6 @@ public interface Graph<V, E> {
 
     void depthFirstSearch(V root, Consumer<V> consumer);
 
+    int[][] singleShortestRoute(V root);
+
 }

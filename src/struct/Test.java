@@ -9,14 +9,14 @@ import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
-        int v = 9, e = 9;
+        int v = 7, e = 9;
         ArrayList<int[]> edges = GraphUtil.getEdges(v, e);
 
-        Graph<Integer, int[]> graph = new StaticArrayGraph(v);
+        StaticArrayGraph graph = new StaticArrayGraph(v);
         IStaticLinkedGraph linkedGraph = new IStaticLinkedGraph(v);
 
         for (int[] edge : edges)
-            if (!graph.addEdge(edge[0], edge[1]))
+            if (!graph.addEdge(edge[0], edge[1], (int) (Math.random() * 9) + 1, true))
                 throw new UnsupportedOperationException();
 
         for (int[] edge : edges)
@@ -45,5 +45,24 @@ public class Test {
         List<int[]> eds = linkedGraph.getEdges(3);
         for (int[] edge : eds)
             System.out.println(Arrays.toString(edge));
+
+        System.out.println();
+        int[][] rets = graph.singleShortestRoute(7);
+        int[] costs = rets[0], paths = rets[1];
+        for (int i = 0; i < paths.length; i++)
+            System.out.print(i + " ");
+        System.out.println("\n---------------------------");
+        for (int path : paths)
+            System.out.print(path + " ");
+        System.out.print(" -- paths");
+        System.out.println();
+        for (int cost : costs) {
+            if (cost == Integer.MAX_VALUE)
+                System.out.print("* ");
+            else
+                System.out.print(cost + " ");
+        }
+        System.out.print(" -- costs");
+        System.out.println();
     }
 }

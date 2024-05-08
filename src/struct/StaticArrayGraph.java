@@ -1,6 +1,7 @@
 package struct;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -141,6 +142,41 @@ public class StaticArrayGraph implements Graph<Integer, int[]> {
                     break;
                 }
         }
+    }
+
+    @Override
+    public int[][] singleShortestRoute(Integer root) {
+        int[][] vertexes = this.vertexes;
+        int length = vertexes.length;
+        boolean[] finals = new boolean[length], templates = new boolean[length];
+        doDFS(root, v -> {
+        }, templates);//检查与include节点连通的所有节点
+        int[] costs = new int[length];
+        for (int i = 1; i < length; i++)
+            costs[i] = Integer.MAX_VALUE;
+        costs[root] = 0;
+        int[] paths = new int[length];
+        while (!Arrays.equals(finals, templates)) {
+            int closest = root, minCost = Integer.MAX_VALUE;
+            for (int i = 1; i < length; i++)
+                if (!finals[i]) {
+                    int cost = costs[i];
+                    if (cost < minCost) {
+                        closest = i;
+                        minCost = cost;
+                    }
+                }
+            finals[closest] = true;
+            for (int cur = firstVertex(closest); cur != -1; cur = nextVertex(closest, cur))
+                if (!finals[cur]) {
+                    int cost = costs[closest] + vertexes[closest][cur];
+                    if (cost < costs[cur]) {
+                        costs[cur] = cost;
+                        paths[cur] = closest;
+                    }
+                }
+        }
+        return new int[][]{costs, paths};
     }
 
     private void doDFS(Integer root, Consumer<Integer> consumer, boolean[] visits) {

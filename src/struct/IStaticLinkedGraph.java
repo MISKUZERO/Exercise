@@ -123,6 +123,11 @@ public class IStaticLinkedGraph implements Graph<StaticLinkedGraph.Node, int[]> 
         }
     }
 
+    @Override
+    public int[][] singleShortestRoute(StaticLinkedGraph.Node root) {
+        return null;
+    }
+
     private void doDFS(StaticLinkedGraph.Node root, Consumer<StaticLinkedGraph.Node> consumer, boolean[] visits) {
         visits[root.id] = true;
         consumer.accept(root);
