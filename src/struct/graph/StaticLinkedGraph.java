@@ -1,4 +1,4 @@
-package struct;
+package struct.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;

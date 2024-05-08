@@ -1,6 +1,6 @@
 package exercise;
 
-import struct.StaticLinkedGraph;
+import struct.graph.StaticLinkedGraph;
 
 import java.util.*;
 

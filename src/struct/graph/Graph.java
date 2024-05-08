@@ -1,4 +1,4 @@
-package struct;
+package struct.graph;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -21,5 +21,7 @@ public interface Graph<V, E> {
     void depthFirstSearch(V root, Consumer<V> consumer);
 
     int[][] singleShortestRoute(V root);
+
+    Graph<V, E> minimumSpanningTree(V root);
 
 }

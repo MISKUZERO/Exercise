@@ -1,18 +1,18 @@
-package struct;
+package struct.graph;
 
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class IStaticLinkedGraph implements Graph<StaticLinkedGraph.Node, int[]> {
+public class FixedVertexLinkedGraph implements Graph<StaticLinkedGraph.Node, int[]> {
 
     private final StaticLinkedGraph graph;
 
-    public IStaticLinkedGraph(int vertexCount) {
+    public FixedVertexLinkedGraph(int vertexCount) {
         graph = new StaticLinkedGraph(vertexCount);
     }
 
-    public IStaticLinkedGraph(StaticLinkedGraph graph) {
+    public FixedVertexLinkedGraph(StaticLinkedGraph graph) {
         this.graph = graph;
     }
 
@@ -125,6 +125,11 @@ public class IStaticLinkedGraph implements Graph<StaticLinkedGraph.Node, int[]> 
 
     @Override
     public int[][] singleShortestRoute(StaticLinkedGraph.Node root) {
+        return null;
+    }
+
+    @Override
+    public Graph<StaticLinkedGraph.Node, int[]> minimumSpanningTree(StaticLinkedGraph.Node root) {
         return null;
     }
 
