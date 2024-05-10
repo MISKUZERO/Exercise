@@ -22,6 +22,8 @@ public interface Graph<V, E> {
 
     int[][] singleShortestRoute(V root);
 
+    int[][][] allShortestRoute();
+
     Graph<V, E> minimumSpanningTree(V root);
 
 }

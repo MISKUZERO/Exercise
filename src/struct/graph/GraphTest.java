@@ -17,7 +17,7 @@ public class GraphTest {
 
         for (int[] edge : edges)
             if (!graph.addEdge(edge[0], edge[1],
-                    (int) (Math.random() * 9) + 1, true))
+                    (int) (Math.random() * 5) + 1, true))
                 throw new UnsupportedOperationException();
 
         for (int[] edge : edges)
@@ -47,24 +47,53 @@ public class GraphTest {
         List<int[]> eds = linkedGraph.getEdges(3);
         for (int[] edge : eds)
             System.out.println(Arrays.toString(edge));
-
         System.out.println();
-        int[][] rets = graph.singleShortestRoute(7);
-        int[] costs = rets[0], paths = rets[1];
-        for (int i = 0; i < paths.length; i++)
-            System.out.print(i + " ");
-        System.out.println("\n---------------------------");
-        for (int path : paths)
-            System.out.print(path + " ");
-        System.out.print(" -- paths\n");
-        for (int cost : costs) {
-            if (cost == Integer.MAX_VALUE)
-                System.out.print("* ");
-            else
-                System.out.print(cost + " ");
+
+        System.out.println(graph.minimumSpanningTree(7));
+
+        System.out.println("== single ==");
+        for (int i = 1; i <= 7; i++) {
+            int[][] rets = graph.singleShortestRoute(i);
+            for (int cost : rets[0]) {
+                if (cost == Integer.MAX_VALUE)
+                    System.out.print("* ");
+                else
+                    System.out.print(cost + " ");
+            }
+            System.out.println();
         }
-        System.out.print(" -- costs\n\n");
-        Graph<Integer, int[]> spanningTree = graph.minimumSpanningTree(7);
-        System.out.println(spanningTree);
+        System.out.println(" -- costs");
+
+        for (int i = 1; i <= 7; i++) {
+            int[][] rets = graph.singleShortestRoute(i);
+            for (int path : rets[1])
+                if (path == Integer.MAX_VALUE)
+                    System.out.print("* ");
+                else
+                    System.out.print(path + " ");
+            System.out.println();
+        }
+        System.out.println(" -- paths");
+
+        System.out.println("\n== all ==");
+        int[][][] res = graph.allShortestRoute();
+        for (int[] i : res[0]) {
+            for (int j : i)
+                if (j == Integer.MAX_VALUE)
+                    System.out.print("* ");
+                else
+                    System.out.print(j + " ");
+            System.out.println();
+        }
+        System.out.println(" -- costs");
+        for (int[] i : res[1]) {
+            for (int j : i)
+                if (j == Integer.MAX_VALUE)
+                    System.out.print("* ");
+                else
+                    System.out.print(j + " ");
+            System.out.println();
+        }
+        System.out.println(" -- paths");
     }
 }

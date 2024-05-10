@@ -129,6 +129,11 @@ public class FixedVertexLinkedGraph implements Graph<StaticLinkedGraph.Node, int
     }
 
     @Override
+    public int[][][] allShortestRoute() {
+        return null;
+    }
+
+    @Override
     public Graph<StaticLinkedGraph.Node, int[]> minimumSpanningTree(StaticLinkedGraph.Node root) {
         return null;
     }

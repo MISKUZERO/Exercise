@@ -158,6 +158,38 @@ public class FixedVertexMatrixGraph implements Graph<Integer, int[]> {
     }
 
     @Override
+    public int[][][] allShortestRoute() {
+        int[][] vertexes = this.vertexes;
+        int length = vertexes.length;
+        int[][] paths = new int[length][length], costs = new int[length][length];
+        //初始化
+        for (int i = 1; i < length; i++)
+            for (int j = 1; j < length; j++)
+                if (i != j) {
+                    int cost = vertexes[i][j];
+                    if (cost == 0)
+                        costs[i][j] = Integer.MAX_VALUE;
+                    else
+                        costs[i][j] = cost;
+                }
+        //执行
+        for (int k = 1; k < length; k++) {
+            for (int i = 1; i < length; i++) {
+                for (int j = 1; j < length; j++) {
+                    int cIK = costs[i][k], cKJ = costs[k][j], cIJ = costs[i][j], cIKJ = cIK + cKJ;
+                    if (cIK == Integer.MAX_VALUE || cKJ == Integer.MAX_VALUE)//规格化
+                        cIKJ = Integer.MAX_VALUE;
+                    if (cIKJ < cIJ) {
+                        costs[i][j] = cIKJ;
+                        paths[i][j] = k;
+                    }
+                }
+            }
+        }
+        return new int[][][]{costs, paths};
+    }
+
+    @Override
     public Graph<Integer, int[]> minimumSpanningTree(Integer root) {
         int[][] vertexes = this.vertexes;
         int length = vertexes.length;
