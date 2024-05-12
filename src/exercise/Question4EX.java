@@ -8,17 +8,6 @@ public class Question4EX {
 
 
     public static void main(String[] args) {
-//        Scanner scanner = new Scanner(System.in);
-//        String fLine = scanner.nextLine();
-//        String[] s = fLine.split(" ");
-//        final int v = Integer.parseInt(s[0]);
-//        final int e = Integer.parseInt(s[1]);
-//        StaticLinkedGraph graph = new StaticLinkedGraph(v);
-//        for (int i = 0; i < e; i++) {
-//            String line = scanner.nextLine();
-//            String[] ss = line.split(" ");
-//            graph.addEdge(Integer.parseInt(ss[0]), Integer.parseInt(ss[1]));
-//        }
         int v = GraphUtil.v;
         ArrayList<int[]> edges = GraphUtil.edges;
 

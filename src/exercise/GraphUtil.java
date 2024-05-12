@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GraphUtil {
 
-    static int v = 24, e = 72;
+    static int v = 26, e = 70;
     public static ArrayList<int[]> edges = getEdges(v, e);
 
     public static ArrayList<int[]> getEdges(int v, int e) {
@@ -32,8 +32,10 @@ public class GraphUtil {
     }
 
     public static void main(String[] args) {
-        Question4.main(null);
+//        Question4.main(null);
         Question4E.main(null);
         Question4EX.main(null);
+//        Question4EXX.main(null);
+        Question4EXXX.main(null);
     }
 }
