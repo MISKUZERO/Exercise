@@ -12,7 +12,7 @@ public class Question11 {
         final int N = Integer.parseInt(s[1]);
         final int X = Integer.parseInt(s[2]);
         ArrayList<ArrayList<ArrayList<Integer>>> paths = new ArrayList<>();
-        dfs(X, 0, M, N, X, new ArrayList<>(), paths);
+        dfs(X, 0, M, N, 0, 0, X, new ArrayList<>(), paths);
         if (paths.isEmpty()) {
             System.out.println(0);
             return;
@@ -23,50 +23,31 @@ public class Question11 {
             if (size < min)
                 min = size;
         }
-        for (ArrayList<ArrayList<Integer>> path : paths) {
-            int size = path.size();
-            if (size == min)
+        for (ArrayList<ArrayList<Integer>> path : paths)
+            if (path.size() == min)
                 System.out.println(path);
-        }
-        System.out.println(paths.size());
         System.out.println(min);
     }
 
-
-    public static void dfs(int s, int w, int rs, int rw, final int C,
+    public static void dfs(int s, int w, int rs, int rw, int os, int ow, final int C,
                            ArrayList<ArrayList<Integer>> path, ArrayList<ArrayList<ArrayList<Integer>>> paths) {
-        if (w > s || rw > rs || rs < 0 || rw < 0)
-            return;
-        if (rs == 0) {
+        if ((s != 0 && s <= w) || (rs != 0 && rs <= rw) || (os != 0 && os <= ow) || (rs < 0 || rw < 0)) return;
+        if (rs == 0 && rw == 0) {
             paths.add(new ArrayList<>(path));
             return;
         }
-        doDFS(0, new int[C], rs, rw, C, path, paths);
+        for (int i = 0; i <= C; i++)
+            for (int j = i; j <= C; j++)
+                if (j != 0) handle(rs, rw, i, j - i, os, ow, C, path, paths);
     }
 
-    private static void doDFS(int index, int[] nums,
-                              int rs, int rw, final int C,
-                              ArrayList<ArrayList<Integer>> path, ArrayList<ArrayList<ArrayList<Integer>>> paths) {
-        if (index == C) {//处理
-            int ss = 0, ww = 0;
-            for (int num : nums)
-                if (num == 1)
-                    ss++;
-                else if (num == 2)
-                    ww++;
-            if (ss + ww == 0) return;
-            ArrayList<Integer> list = new ArrayList<>();
-            list.add(ss);
-            list.add(ww);
-            path.add(list);
-            dfs(ss, ww, rs - ss, rw - ww, C, path, paths);
-            path.remove(path.size() - 1);
-            return;
-        }
-        for (int i = 0; i < 3; i++) {
-            nums[index++] = i;
-            doDFS(index--, nums, rs, rw, C, path, paths);
-        }
-
+    private static void handle(int rs, int rw, int ss, int ww, int os, int ow, final int C,
+                               ArrayList<ArrayList<Integer>> path, ArrayList<ArrayList<ArrayList<Integer>>> paths) {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(ss);
+        list.add(ww);
+        path.add(list);
+        dfs(ss, ww, rs - ss, rw - ww, os + ss, ow + ww, C, path, paths);
+        path.remove(path.size() - 1);
     }
 }
