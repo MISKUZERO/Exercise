@@ -4,8 +4,10 @@ package exercise.ex;
 public class MaxSubArray {
 
     public static void main(String[] args) {
-        System.out.println(new MaxSubArray().maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
-        System.out.println(new MaxSubArray().maxSubArrayNew(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
+        int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        System.out.println(new MaxSubArray().maxSubArray(nums));
+        System.out.println(new MaxSubArray().maxSubArrayNew(nums));
+        System.out.println(new MaxSubArray().maxSubArray(nums, 0, nums.length - 1));
     }
 
     public int maxSubArray(int[] nums) {
@@ -31,5 +33,45 @@ public class MaxSubArray {
         }
         return maxAns;
     }
+
+    private int maxSubArray(int[] nums, int lo, int hi) {
+        if (hi < lo)
+            return Integer.MIN_VALUE;
+        else if (hi == lo)
+            return nums[lo];
+        int mid = lo + (hi - lo) / 2;// 计算左半部分数组的最大子数组和
+        int max_left = maxSubArray(nums, lo, mid);// 计算右半部分数组的最大子数组和
+        int max_right = maxSubArray(nums, mid + 1, hi);
+        int max_mid = maxMidSubArray(nums, lo, mid, hi);
+//        int max_mid = max_left + max_right;
+        return Math.max(max_left, Math.max(max_mid, max_right));
+    }
+
+    private int maxMidSubArray(int[] nums, int lo, int mid, int hi) {
+        // 计算中间线左侧（且紧挨着中间线）的最大子数组和
+        int max_mid_left = 0;
+        if (mid >= lo) {
+            max_mid_left = nums[mid];
+            int sum = 0;
+            for (int i = mid; i >= lo; i--) {
+                sum += nums[i];
+                max_mid_left = Math.max(max_mid_left, sum);
+            }
+        }
+
+        // 计算中间线右侧（且紧挨着中间线）的最大子数组和
+        int max_mid_right = 0;
+        if (mid + 1 <= hi) {
+            max_mid_right = nums[mid + 1];
+            int sum = 0;
+            for (int i = mid + 1; i <= hi; i++) {
+                sum += nums[i];
+                max_mid_right = Math.max(max_mid_right, sum);
+            }
+        }
+
+        return max_mid_left + max_mid_right;
+    }
+
 
 }
