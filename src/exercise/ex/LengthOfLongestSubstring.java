@@ -7,7 +7,7 @@ import java.util.HashSet;
 public class LengthOfLongestSubstring {
 
     public static void main(String[] args) {
-        System.out.println(new LengthOfLongestSubstring().lengthOfLongestSubstring("aab"));
+        System.out.println(new LengthOfLongestSubstring().lengthOfLongestSubstringNew2(""));
     }
 
     public int lengthOfLongestSubstring(String s) {
@@ -41,6 +41,22 @@ public class LengthOfLongestSubstring {
     }
 
     public int lengthOfLongestSubstringNew1(String s) {
+        HashSet<Character> hashSet = new HashSet<>();
+        int maxLen = 0;
+        int length = s.length();
+        if (length == 0) return 0;
+        char c = s.charAt(0);
+        int i = 0, j = 0;
+        while (i != length) {
+            while (hashSet.contains(c))
+                hashSet.remove(s.charAt(j++));
+            while (i != length && hashSet.add((c = s.charAt(i)))) i++;
+            maxLen = Math.max(maxLen, hashSet.size());
+        }
+        return maxLen;
+    }
+
+    public int lengthOfLongestSubstringNew2(String s) {
         int count = 0, curCount = 0;
         int length = s.length();
         int[] codes = new int[128];
@@ -53,5 +69,6 @@ public class LengthOfLongestSubstring {
         }
         return count;
     }
+
 
 }
