@@ -35,9 +35,7 @@ public class MaxSubArray {
     }
 
     private int maxSubArray(int[] nums, int lo, int hi) {
-        if (hi < lo)
-            return Integer.MIN_VALUE;
-        else if (hi == lo)
+        if (hi == lo)
             return nums[lo];
         int mid = lo + (hi - lo) / 2;// 计算左半部分数组的最大子数组和
         int max_left = maxSubArray(nums, lo, mid);// 计算右半部分数组的最大子数组和

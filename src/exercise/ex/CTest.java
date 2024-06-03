@@ -2,7 +2,6 @@ package exercise.ex;
 
 public class CTest {
     public static void main(String[] args) {
-        cN5(7);
         for (int i = 3; i < 10; i++)
             System.out.print(cN5(i) + "  ");
         System.out.println();
